@@ -258,13 +258,13 @@ function ciusan_logout($atts, $content = null) {
 		), $atts ) );
 		switch ($redirect) {
 			case 'default':
-			$output = wp_logout_url();
+			$output = '<a href="'.wp_logout_url().'">Logout</a>';
 			break;
 			case 'current':
-			$output = wp_logout_url(get_permalink());
+			$output = '<a href="'.wp_logout_url(get_permalink()).'">Logout</a>';
 			break;
 			case 'home':
-			$output = wp_logout_url(home_url());
+			$output = '<a href="'.wp_logout_url(home_url()).'">Logout</a>';
 			break;
 		}
 		return $output;
