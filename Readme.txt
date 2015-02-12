@@ -24,7 +24,7 @@ Showing login, register or lost password form modal popup with ajax.
 <li>[ciusan_logout redirect="current"] not redirected to everywhere after klik logout link.</li></ul>
 
 <h5><strong>Notes:</strong></h5>
-<ul><li>For better results, I recommend using "<a href="http://plugin.ciusan.com/29/ciusan-restrict-widget/">Restrict Ciusan Widget</a>" with this plugin.</li></ul>
+<ul><li>For better results, I recommend using "<a href="http://plugin.ciusan.com/29/ciusan-restrict-widget/">Ciusan Restrict Widget</a>" with this plugin.</li></ul>
 
 <a href="http://plugin.ciusan.com/134/ciusan-register-login/">Ciusan Register Login</a>
 
