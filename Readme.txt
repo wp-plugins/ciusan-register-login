@@ -23,7 +23,7 @@ Showing login, register or lost password form modal popup with ajax.
 <li>[ciusan_logout redirect="home"] redirected to homepage after klik logout link.</li>
 <li>[ciusan_logout redirect="current"] not redirected to everywhere after klik logout link.</li></ul>
 
-<h5><strong>Special Thanks to:</strong></h5>
+<h6><strong>Special Thanks to:</strong></h6>
 <ul><li><strong>Amit Sonkhiya</strong> who has made an great tutorial at here "<a href="http://fellowtuts.com/wordpress/wordpress-ajax-login-and-register-without-a-plugin/">WordPress AJAX Login and Register without a Plugin</a>".</li></ul>
 
 <h5><strong>Notes:</strong></h5>
