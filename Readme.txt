@@ -4,7 +4,7 @@ Donate link: http://www.ciusan.com/submit-donation/
 Tags: ciusan, login, register, lost, password, popup, modal, overlay, shortcode
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.0
+Stable tag: 1.1
 
 Showing login, register or lost password form modal popup with ajax.
 
@@ -44,8 +44,13 @@ Showing login, register or lost password form modal popup with ajax.
 3. Forgot password form.
 4. All fields required.
 5. Error form.
+6. All settings on WP Dashboard.
 
 == Changelog ==
+
+= 1.1 =
+* Added settings for change button text, button class, and title text.
+* Added redirect URL settings after successful login and successful register.
 
 = 1.0 =
 * First release.

@@ -1,10 +1,10 @@
 <?php 
 /*
 Plugin Name: Ciusan Register Login
-Plugin URI: http://plugin.ciusan.com/
+Plugin URI: http://plugin.ciusan.com/134/ciusan-register-login/
 Description: Showing login, register or lost password form modal popup with ajax.
 Author: Dannie Herdyawan
-Version: 1.0
+Version: 1.1
 Author URI: http://www.ciusan.com/
 */
 
@@ -19,21 +19,51 @@ Author URI: http://www.ciusan.com/
 
 */
 
-function ajax_auth_init(){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+add_action('admin_menu', 'ciusan_register_login__menu');
+function ciusan_register_login__menu() {
+	if((current_user_can('manage_options') || is_admin)) {
+		add_submenu_page('ciusan-plugin','Register Login','Register Login',1,'register_login','ciusan_register_login');
+	}
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function ciusan_register_login(){ 
+	echo '<div class="wrap"><h2>Ciusan Register Login</h2>';
+	if (isset($_POST['save'])) {
+		$options['login_title']				= trim($_POST['login_title'],'{}');
+		$options['register_title']			= trim($_POST['register_title'],'{}');
+		$options['forgot_password_title']	= trim($_POST['forgot_password_title'],'{}');
+		$options['button_login']			= trim($_POST['button_login'],'{}');
+		$options['button_register']			= trim($_POST['button_register'],'{}');
+		$options['button_forgot_password']	= trim($_POST['button_forgot_password'],'{}');
+		$options['button_class']			= trim($_POST['button_class'],'{}');
+		$options['login_redirect_URL']		= trim($_POST['login_redirect_URL'],'{}');
+		$options['register_redirect_URL']	= trim($_POST['register_redirect_URL'],'{}');
+		update_option('ciusan_register_login', $options);
+		// Show a message to say we've done something
+		echo '<div class="updated"><p><strong>'. __("Settings saved.", "Ciusan").'</strong></p></div>';
+	} else {
+		$options = get_option('ciusan_register_login_option');
+	}
+	require ('admin_menu.php');
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function ajax_auth_init(){ global $options; $options = get_option('ciusan_register_login');
 wp_register_style( 'ajax-auth-style', plugin_dir_url( __FILE__ ).'/ajax-auth-style.css');
 wp_enqueue_style('ajax-auth-style');
 wp_register_script('validate-script', plugin_dir_url( __FILE__ ).'/jquery.validate.js', array('jquery'));
     wp_enqueue_script('validate-script');
- 
+
     wp_register_script('ajax-auth-script', plugin_dir_url( __FILE__ ).'/ajax-auth-script.js', array('jquery'));
     wp_enqueue_script('ajax-auth-script');
- 
-    wp_localize_script( 'ajax-auth-script', 'ajax_auth_object', array(
-        'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'redirecturl' => home_url(),
-        'loadingmessage' => __('Sending user info, please wait...')
-    ));
- 
+
+	    wp_localize_script( 'ajax-auth-script', 'ajax_auth_object', array(
+	        'ajaxurl'			=> admin_url( 'admin-ajax.php' ),
+			'redirecturl'		=> $options['login_redirect_URL'] ? $options['login_redirect_URL'] : home_url(),
+			'register_redirect'	=> $options['register_redirect_URL'] ? $options['register_redirect_URL'] : home_url(),
+        	'loadingmessage'	=> __('Sending user info, please wait...')
+    	));
+
     // Enable the user with no privileges to run ajax_login() in AJAX
     add_action( 'wp_ajax_nopriv_ajaxlogin', 'ajax_login' );
 // Enable the user with no privileges to run ajax_register() in AJAX
@@ -191,9 +221,9 @@ function ajax_forgotPassword(){
 	die();
 }
 
-function ciusan_login_form() { ?>
+function ciusan_login_form() {global $options; $options = get_option('ciusan_register_login'); ?>
 <form id="login" class="ajax-auth" action="login" method="post">
-	<h1>Login</h1>
+	<h1><?php if($options['login_title']){echo $options['login_title'];}else{echo'Login';}?></h1>
 	<hr />
 	<p class="status"></p>  
 	<?php wp_nonce_field('ajax-login-nonce', 'security'); ?>  
@@ -202,14 +232,14 @@ function ciusan_login_form() { ?>
 	<input id="username" type="text" class="required" name="username" placeholder="Insert your username">
 	<span for="password">Password</span>
 	<input id="password" type="password" class="required" name="password" placeholder="Insert your password">
-	<input class="button" type="submit" value="LOGIN">
+	<input class="<?php if($options['button_class']){echo $options['button_class'];}else{echo 'button';};?>" type="submit" value="<?php if ($options['button_login']){echo $options['button_login'];}else{echo 'Login';};?>" name="login">
 	<a id="pop_forgot" class="text-link"  href="<?php echo wp_lostpassword_url(); ?>">Forgot Password?</a>
 	<a class="close" href="">(close)</a>    
 </form>
 
 <form id="register" class="ajax-auth"  action="register" method="post">
-    <h1>Create an Account</h1>
-    <hr />
+	<h1><?php if($options['register_title']){echo $options['register_title'];}else{echo'Create an Account!';}?></h1>
+	<hr />
     <p class="status"></p>
     <?php wp_nonce_field('ajax-register-nonce', 'signonsecurity'); ?>         
     <span for="signonname">Username</span>
@@ -220,19 +250,19 @@ function ciusan_login_form() { ?>
     <input id="signonpassword" type="password" class="required" name="signonpassword" placeholder="Create secure password">
     <span for="password2">Confirm Password</span>
     <input type="password" id="password2" class="required" name="password2" placeholder="Confirm your secure password">
-    <input class="button" type="submit" value="SIGNUP">
+    <input class="<?php if($options['button_class']){echo $options['button_class'];}else{echo 'button';};?>" type="submit" value="<?php if ($options['button_register']){echo $options['button_register'];}else{echo 'Register';};?>" name="register">
 	<a id="pop_login" class="text-link" style="cursor:pointer">Want to Login?</a>
     <a class="close" href="">(close)</a>    
 </form>
 
-<form id="forgot_password" class="ajax-auth" action="forgot_password" method="post">    
-    <h1>Forgot Password?</h1>
+<form id="forgot_password" class="ajax-auth" action="forgot_password" method="post">
+	<h1><?php if($options['forgot_password_title']){echo $options['forgot_password_title'];}else{echo'forgot password?';}?></h1>
     <hr />
     <p class="status"></p>  
     <?php wp_nonce_field('ajax-forgot-nonce', 'forgotsecurity'); ?>  
     <span for="user_login">Username or Email</span>
     <input id="user_login" type="text" class="required" name="user_login" placeholder="Insert your username or email">
-	<input class="button" type="submit" value="SUBMIT">
+	<input class="<?php if($options['button_class']){echo $options['button_class'];}else{echo 'button';};?>" type="submit" value="<?php if ($options['button_forgot_password']){echo $options['button_forgot_password'];}else{echo 'Get Password';};?>" name="forgot_password">
 	<a class="close" style="cursor:pointer">(close)</a>    
 </form>
 <?php } 
