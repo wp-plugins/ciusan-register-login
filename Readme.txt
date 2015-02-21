@@ -34,8 +34,8 @@ Showing login, register or lost password form modal popup with ajax.
 
 == Installation ==
 
-1. Upload `ciusan-register-login` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the `Plugins` menu in WordPress.
+1. Upload 'ciusan-register-login' folder to the '/wp-content/plugins/' directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to post or page, then insert shortcode.
 
 == Screenshots ==
