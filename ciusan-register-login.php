@@ -20,6 +20,10 @@ Author URI: http://www.ciusan.com/
 */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!function_exists('ciusan_admin__head')){ ?>
+	<div class="error"><p><strong>Ciusan Register Login</strong> requires <a href="http://plugin.ciusan.com/196/ciusan-admin-menu/">Ciusan Admin Menu</a> for showing settings menu.</p></div>
+<?php }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 add_action('admin_menu', 'ciusan_register_login__menu');
 function ciusan_register_login__menu() {
 	if((current_user_can('manage_options') || is_admin)) {
@@ -41,7 +45,7 @@ function ciusan_register_login(){
 		$options['register_redirect_URL']	= trim($_POST['register_redirect_URL'],'{}');
 		update_option('ciusan_register_login', $options);
 		// Show a message to say we've done something
-		echo '<div class="updated"><p><strong>'. __("Settings saved.", "Ciusan").'</strong></p></div>';
+		echo '<div class="updated ciusan-success-messages"><p><strong>'. __("Settings saved.", "Ciusan").'</strong></p></div>';
 	} else {
 		$options = get_option('ciusan_register_login_option');
 	}
@@ -49,13 +53,13 @@ function ciusan_register_login(){
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function ajax_auth_init(){ global $options; $options = get_option('ciusan_register_login');
-wp_register_style( 'ajax-auth-style', plugin_dir_url( __FILE__ ).'/ajax-auth-style.css');
-wp_enqueue_style('ajax-auth-style');
-wp_register_script('validate-script', plugin_dir_url( __FILE__ ).'/jquery.validate.js', array('jquery'));
+wp_register_style('ciusan-register-login', plugin_dir_url( __FILE__ ).'assets/css/ciusan-register-login.css');
+wp_enqueue_style('ciusan-register-login');
+wp_register_script('validate-script', plugin_dir_url( __FILE__ ).'assets/js/jquery.validate.js', array('jquery'));
     wp_enqueue_script('validate-script');
 
-    wp_register_script('ajax-auth-script', plugin_dir_url( __FILE__ ).'/ajax-auth-script.js', array('jquery'));
-    wp_enqueue_script('ajax-auth-script');
+    wp_register_script('ciusan-register-login', plugin_dir_url( __FILE__ ).'assets/js/ciusan-register-login.js', array('jquery'));
+    wp_enqueue_script('ciusan-register-login');
 
 	    wp_localize_script( 'ajax-auth-script', 'ajax_auth_object', array(
 	        'ajaxurl'			=> admin_url( 'admin-ajax.php' ),
