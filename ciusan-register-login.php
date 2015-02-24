@@ -4,7 +4,7 @@ Plugin Name: Ciusan Register Login
 Plugin URI: http://plugin.ciusan.com/134/ciusan-register-login/
 Description: Showing login, register or lost password form modal popup with ajax.
 Author: Dannie Herdyawan
-Version: 1.1
+Version: 1.2
 Author URI: http://www.ciusan.com/
 */
 
@@ -18,18 +18,39 @@ Author URI: http://www.ciusan.com/
       \/___/  \/__/\/_/\/_/\/_/\/_/\/_/\/_/\/____/  \/__/   \/__/\/__/
 
 */
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!function_exists('ciusan_admin__head')){ ?>
-	<div class="error"><p><strong>Ciusan Register Login</strong> requires <a href="http://plugin.ciusan.com/196/ciusan-admin-menu/">Ciusan Admin Menu</a> for showing settings menu.</p></div>
-<?php }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-add_action('admin_menu', 'ciusan_register_login__menu');
-function ciusan_register_login__menu() {
-	if((current_user_can('manage_options') || is_admin)) {
-		add_submenu_page('ciusan-plugin','Register Login','Register Login',1,'register_login','ciusan_register_login');
+require ('functions.php');
+if(!function_exists('ciusan_admin__head')){
+	function ciusan_admin__head(){
+	wp_register_style('ciusan', plugin_dir_url( __FILE__ ).'assets/css/ciusan.css');
+		wp_enqueue_style('ciusan');
+	wp_register_script('ciusan', plugin_dir_url( __FILE__ ).'assets/js/ciusan.js');
+		wp_enqueue_script('ciusan');
 	}
 }
+function crl_admin__menu(){
+	global $menu;
+	$main_menu_exists = false;
+	foreach ($menu as $key => $value) {
+		if($value[2] == 'ciusan-plugin'){
+			$main_menu_exists = true;
+		}
+	}
+	if(!$main_menu_exists){
+		$ciusan_menu_icon = plugin_dir_url( __FILE__ ).'assets/img/ciusan.png';
+		add_object_page(null, 'Ciusan Plugin', null, 'ciusan-plugin', 'ciusan-plugin', $ciusan_menu_icon);
+		add_submenu_page('ciusan-plugin', 'Submit a Donation', 'Submit a Donation', 0, 'submit_donation', 'ciusan_submit_donation');
+	}
+	add_submenu_page('ciusan-plugin', 'Register Login', 'Register Login', 1, 'register_login','ciusan_register_login');
+}
+function crl_admin_init(){
+	// Create admin menu and page.
+	add_action( 'admin_menu' , 'crl_admin__menu');
+	// Enable admin scripts and styles
+	if(function_exists(ciusan_admin__head)){
+		add_action( 'admin_enqueue_scripts' , 'ciusan_admin__head');
+	}
+} add_action('init', 'crl_admin_init');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function ciusan_register_login(){ 
 	echo '<div class="wrap"><h2>Ciusan Register Login</h2>';

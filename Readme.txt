@@ -3,8 +3,8 @@ Contributors: Dannie Herdyawan
 Donate link: http://www.ciusan.com/submit-donation/
 Tags: ciusan, login, register, lost, password, popup, modal, overlay, shortcode
 Requires at least: 3.2
-Tested up to: 4.1
-Stable tag: 1.1
+Tested up to: 4.1.1
+Stable tag: 1.2
 
 Showing login, register or lost password form modal popup with ajax.
 
@@ -27,8 +27,7 @@ Showing login, register or lost password form modal popup with ajax.
 <ul><li><a href="http://fellowtuts.com/author/Amit/"><strong>Amit Sonkhiya</strong></a> who has made an great tutorial at here "<a href="http://fellowtuts.com/wordpress/wordpress-ajax-login-and-register-without-a-plugin/">WordPress AJAX Login and Register without a Plugin</a>".</li></ul>
 
 <h5><strong>Notes:</strong></h5>
-<ul><li>This plugin required "<a href="http://plugin.ciusan.com/196/ciusan-admin-menu/">Ciusan Admin Menu</a>" for showing setting on WP Dashboard menu.</li>
-<li>For better results, I recommend using "<a href="http://plugin.ciusan.com/29/ciusan-restrict-widget/">Ciusan Restrict Widget</a>" with this plugin.</li></ul>
+<ul><li>For better results, I recommend using "<a href="http://plugin.ciusan.com/29/ciusan-restrict-widget/">Ciusan Restrict Widget</a>" with this plugin.</li></ul>
 
 <a href="http://plugin.ciusan.com/134/ciusan-register-login/">Ciusan Register Login</a>
 
@@ -48,6 +47,9 @@ Showing login, register or lost password form modal popup with ajax.
 6. All settings on WP Dashboard.
 
 == Changelog ==
+
+= 1.2 =
+* Added some functions.
 
 = 1.1 =
 * Added settings for change button text, button class, and title text.

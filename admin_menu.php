@@ -1,6 +1,4 @@
 <?php global $options; $options = get_option('ciusan_register_login'); ?>
-<div class="icon32" id="icon-tools"><br/></div>
-
 <form method="post" id="mainform" action="">
 <table class="ciusan-plugin widefat" style="margin-top:50px;">
 	<thead>
