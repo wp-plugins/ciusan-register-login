@@ -54,22 +54,25 @@ jQuery(document).ready(function ($) {
 			action = 'ajaxregister';
 			username = $('#signonname').val();
 			password = $('#signonpassword').val();
-        	email = $('#email').val();
-        	security = $('#signonsecurity').val();	
-		}  
+			email = $('#email').val();
+			security = $('#signonsecurity').val();
+			recaptcha = $('#g-recaptcha-response').val();
+		}
 		ctrl = $(this);
 		$.ajax({
             type: 'POST',
             dataType: 'json',
             url: ajax_auth_object.ajaxurl,
-            data: {
-                'action': action,
-                'username': username,
-                'password': password,
+			data: {
+				'action': action,
+				'username': username,
+				'password': password,
 				'email': email,
-                'security': security
+				'security': security,
+				'recaptcha': recaptcha
             },
             success: function (data) {
+				if(($(ctrl).attr ('id') == 'register') && (data.loggedin == false)) grecaptcha.reset();
 				$('p.status', ctrl).text(data.message);
 				if (data.loggedin == true) {
 					document.location.href = $(ctrl).attr ('id') == 'register' ? ajax_auth_object.register_redirect : ajax_auth_object.redirecturl;

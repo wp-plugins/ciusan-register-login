@@ -75,6 +75,26 @@
 			</td>
 		</tr>
 	</tbody>
+</table><table class="ciusan-plugin widefat" style="margin-top:25px;">
+	<thead>
+		<tr>
+			<th scope="col">Google reCaptcha</th>
+			<th scope="col"><a target="_blank" href="https://www.google.com/recaptcha/intro/index.html">More information</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="titledesc">Google Site Key</td>
+			<td class="forminp">
+				<input name="Google_Site_Key" id="button_class" style="width:250px;" value="<?php echo $options[Google_Site_Key]; ?>" type="text" class="required" placeholder="eg &quot;6Lf75gIT02AFBH8KfqlV0PV_t6J2vEB-1tbbCDG&quot;">
+			</td>
+		</tr><tr>
+			<td class="titledesc">Google Secret Key</td>
+			<td class="forminp">
+				<input name="Google_Secret_Key" id="button_class" style="width:250px;" value="<?php echo $options[Google_Secret_Key]; ?>" type="text" class="required" placeholder="eg &quot;6Lf75gIT02AFBH8KfqlV0PV_t6J2vEB-1tbbCDG&quot;">
+			</td>
+		</tr>
+	</tbody>
 </table>
 <input type="hidden" name="action" value="update" />
 <input type="hidden" name="page_options" value="<?php get_option($options) ?>" />

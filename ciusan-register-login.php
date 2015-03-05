@@ -4,7 +4,7 @@ Plugin Name: Ciusan Register Login
 Plugin URI: http://plugin.ciusan.com/134/ciusan-register-login/
 Description: Showing login, register or lost password form modal popup with ajax.
 Author: Dannie Herdyawan
-Version: 1.2
+Version: 2.0
 Author URI: http://www.ciusan.com/
 */
 
@@ -64,6 +64,8 @@ function ciusan_register_login(){
 		$options['button_class']			= trim($_POST['button_class'],'{}');
 		$options['login_redirect_URL']		= trim($_POST['login_redirect_URL'],'{}');
 		$options['register_redirect_URL']	= trim($_POST['register_redirect_URL'],'{}');
+		$options['Google_Site_Key']			= trim($_POST['Google_Site_Key'],'{}');
+		$options['Google_Secret_Key']		= trim($_POST['Google_Secret_Key'],'{}');
 		update_option('ciusan_register_login', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated ciusan-success-messages"><p><strong>'. __("Settings saved.", "Ciusan").'</strong></p></div>';
@@ -78,10 +80,10 @@ wp_register_style('ciusan-register-login', plugin_dir_url( __FILE__ ).'assets/cs
 wp_enqueue_style('ciusan-register-login');
 wp_register_script('validate-script', plugin_dir_url( __FILE__ ).'assets/js/jquery.validate.js', array('jquery'));
     wp_enqueue_script('validate-script');
-
+    wp_register_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js');
+    wp_enqueue_script('google-recaptcha');
     wp_register_script('ciusan-register-login', plugin_dir_url( __FILE__ ).'assets/js/ciusan-register-login.js', array('jquery'));
     wp_enqueue_script('ciusan-register-login');
-
 	    wp_localize_script( 'ajax-auth-script', 'ajax_auth_object', array(
 	        'ajaxurl'			=> admin_url( 'admin-ajax.php' ),
 			'redirecturl'		=> $options['login_redirect_URL'] ? $options['login_redirect_URL'] : home_url(),
@@ -115,10 +117,33 @@ function ajax_login(){
     die();
 }
 
-function ajax_register(){
+function ajax_register(){ global $options; $options = get_option('ciusan_register_login');
 
     // First check the nonce, if it fails the function will break
     check_ajax_referer( 'ajax-register-nonce', 'security' );
+
+	$recaptcha = $_POST['recaptcha'];
+	if(!empty($recaptcha)){
+		$google_url = "https://www.google.com/recaptcha/api/siteverify";
+		$secret = $options['Google_Secret_Key'];
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$url = $google_url."?secret=".$secret."&response=".$recaptcha."&remoteip=".$ip;
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16");
+		$results = curl_exec($curl);
+		curl_close($curl);
+		$res= json_decode($results, true);
+		if(!$res['success']){
+			echo json_encode(array('loggedin'=>false, 'message'=>__('reCAPTCHA invalid')));
+			die();
+		}
+	}else{
+		echo json_encode(array('loggedin'=>false, 'message'=>__('Please enter reCAPTCHA')));
+		die();
+	}
 		
     // Nonce is checked, get the POST data and sign user on
     $info = array();
@@ -247,7 +272,7 @@ function ajax_forgotPassword(){
 }
 
 function ciusan_login_form() {global $options; $options = get_option('ciusan_register_login'); ?>
-<form id="login" class="ajax-auth" action="login" method="post">
+<form id="login" class="crl-ajax-auth" action="login" method="post">
 	<h1><?php if($options['login_title']){echo $options['login_title'];}else{echo'Login';}?></h1>
 	<hr />
 	<p class="status"></p>  
@@ -262,7 +287,7 @@ function ciusan_login_form() {global $options; $options = get_option('ciusan_reg
 	<a class="close" href="">(close)</a>    
 </form>
 
-<form id="register" class="ajax-auth"  action="register" method="post">
+<form id="register" class="crl-ajax-auth"  action="register" method="post">
 	<h1><?php if($options['register_title']){echo $options['register_title'];}else{echo'Create an Account!';}?></h1>
 	<hr />
     <p class="status"></p>
@@ -275,15 +300,16 @@ function ciusan_login_form() {global $options; $options = get_option('ciusan_reg
     <input id="signonpassword" type="password" class="required" name="signonpassword" placeholder="Create secure password">
     <span for="password2">Confirm Password</span>
     <input type="password" id="password2" class="required" name="password2" placeholder="Confirm your secure password">
+	<div class="g-recaptcha" data-sitekey="<?php echo $options['Google_Site_Key']; ?>" style="display:block;"></div><br/>
     <input class="<?php if($options['button_class']){echo $options['button_class'];}else{echo 'button';};?>" type="submit" value="<?php if ($options['button_register']){echo $options['button_register'];}else{echo 'Register';};?>" name="register">
 	<a id="pop_login" class="text-link" style="cursor:pointer">Want to Login?</a>
-    <a class="close" href="">(close)</a>    
+    <a class="close" href="">(close)</a>
 </form>
 
-<form id="forgot_password" class="ajax-auth" action="forgot_password" method="post">
+<form id="forgot_password" class="crl-ajax-auth" action="forgot_password" method="post">
 	<h1><?php if($options['forgot_password_title']){echo $options['forgot_password_title'];}else{echo'forgot password?';}?></h1>
     <hr />
-    <p class="status"></p>  
+    <p class="status"></p>
     <?php wp_nonce_field('ajax-forgot-nonce', 'forgotsecurity'); ?>  
     <span for="user_login">Username or Email</span>
     <input id="user_login" type="text" class="required" name="user_login" placeholder="Insert your username or email">
