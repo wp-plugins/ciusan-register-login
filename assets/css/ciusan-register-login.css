@@ -113,7 +113,7 @@ form.crl-ajax-auth{
 .crl-ajax-auth span{
 	display:inline-block;
 }
-.login_overlay{
+.crl_overlay{
     height:100%;
     width:100%;
     background-color:#F6F6F6;

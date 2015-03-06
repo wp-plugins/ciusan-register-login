@@ -26,7 +26,7 @@ jQuery(document).ready(function ($) {
 	// Close popup
     $(document).on('click', '.close', function () {
 		$('form#login, form#register, form#forgot_password').fadeOut(500, function () {
-            $('.login_overlay').remove();
+            $('.crl_overlay').remove();
         });
         return false;
     });
