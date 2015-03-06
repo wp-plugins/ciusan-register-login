@@ -86,8 +86,8 @@ wp_register_script('validate-script', plugin_dir_url( __FILE__ ).'assets/js/jque
     wp_enqueue_script('ciusan-register-login');
 	    wp_localize_script( 'ajax-auth-script', 'ajax_auth_object', array(
 	        'ajaxurl'			=> admin_url( 'admin-ajax.php' ),
-			'redirecturl'		=> $options['login_redirect_URL'] ? $options['login_redirect_URL'] : home_url(),
-			'register_redirect'	=> $options['register_redirect_URL'] ? $options['register_redirect_URL'] : home_url(),
+			'redirecturl'		=> isset($options['login_redirect_URL']) ? $options['login_redirect_URL'] : home_url(),
+			'register_redirect'	=> isset($options['register_redirect_URL']) ? $options['register_redirect_URL'] : home_url(),
         	'loadingmessage'	=> __('Sending user info, please wait...')
     	));
 
