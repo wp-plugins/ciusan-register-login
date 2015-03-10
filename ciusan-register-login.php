@@ -39,9 +39,9 @@ function crl_admin__menu(){
 	if(!$main_menu_exists){
 		$ciusan_menu_icon = plugin_dir_url( __FILE__ ).'assets/img/ciusan.png';
 		add_object_page(null, 'Ciusan Plugin', null, 'ciusan-plugin', 'ciusan-plugin', $ciusan_menu_icon);
-		add_submenu_page('ciusan-plugin', 'Submit a Donation', 'Submit a Donation', 0, 'submit_donation', 'ciusan_submit_donation');
+		add_submenu_page('ciusan-plugin', 'Submit a Donation', 'Submit a Donation', 0, 'ciusan-submit-donation', 'ciusan_submit_donation');
 	}
-	add_submenu_page('ciusan-plugin', 'Register Login', 'Register Login', 1, 'register_login','ciusan_register_login');
+	add_submenu_page('ciusan-plugin', 'Register Login', 'Register Login', 1, 'ciusan-register-login','ciusan_register_login');
 }
 function crl_admin_init(){
 	// Create admin menu and page.

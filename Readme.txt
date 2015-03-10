@@ -48,6 +48,9 @@ Showing login, register or lost password form modal popup with ajax.
 
 == Changelog ==
 
+= 2.1 =
+* Fixed conflict admin settings page slug with other same plugin.
+
 = 2.0 =
 * Added Google reCaptcha on signup form.
 
