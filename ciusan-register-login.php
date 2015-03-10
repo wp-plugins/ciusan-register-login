@@ -4,7 +4,7 @@ Plugin Name: Ciusan Register Login
 Plugin URI: http://plugin.ciusan.com/134/ciusan-register-login/
 Description: Showing login, register or lost password form modal popup with ajax.
 Author: Dannie Herdyawan
-Version: 2.0
+Version: 2.1
 Author URI: http://www.ciusan.com/
 */
 
