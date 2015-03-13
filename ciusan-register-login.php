@@ -4,7 +4,7 @@ Plugin Name: Ciusan Register Login
 Plugin URI: http://plugin.ciusan.com/134/ciusan-register-login/
 Description: Showing login, register or lost password form modal popup with ajax.
 Author: Dannie Herdyawan
-Version: 2.1
+Version: 2.0
 Author URI: http://www.ciusan.com/
 */
 
@@ -277,11 +277,11 @@ function ciusan_login_form() {global $options; $options = get_option('ciusan_reg
 	<hr />
 	<p class="status"></p>  
 	<?php wp_nonce_field('ajax-login-nonce', 'security'); ?>  
-	<span for="username">Username</span>    
-	<span style="float:right;"><a id="pop_signup" style="cursor:pointer;color:#B4B2B2;">Create an Account!</a></span>
-	<input id="username" type="text" class="required" name="username" placeholder="Insert your username">
-	<span for="password">Password</span>
-	<input id="password" type="password" class="required" name="password" placeholder="Insert your password">
+	<div for="username"><span class="label">Username</span>
+	<div style="float:right;"><a id="pop_signup" style="cursor:pointer;color:#B4B2B2;">Create an Account!</a></div>
+	<input id="username" type="text" class="required" name="username" placeholder="Insert your username"></div>
+	<div for="password"><span class="label">Password</span>
+	<input id="password" type="password" class="required" name="password" placeholder="Insert your password"></div>
 	<input class="<?php if($options['button_class']){echo $options['button_class'];}else{echo 'button';};?>" type="submit" value="<?php if ($options['button_login']){echo $options['button_login'];}else{echo 'Login';};?>" name="login">
 	<a id="pop_forgot" class="text-link"  href="<?php echo wp_lostpassword_url(); ?>">Forgot Password?</a>
 	<a class="close" href="">(close)</a>    
@@ -292,15 +292,15 @@ function ciusan_login_form() {global $options; $options = get_option('ciusan_reg
 	<hr />
     <p class="status"></p>
     <?php wp_nonce_field('ajax-register-nonce', 'signonsecurity'); ?>         
-    <span for="signonname">Username</span>
-    <input id="signonname" type="text" name="signonname" class="required" placeholder="Your unique username">
-    <span for="email">Email</span>
-    <input id="email" type="text" class="required email" name="email" placeholder="Your valid email">
-    <span for="signonpassword">Password</span>
-    <input id="signonpassword" type="password" class="required" name="signonpassword" placeholder="Create secure password">
-    <span for="password2">Confirm Password</span>
-    <input type="password" id="password2" class="required" name="password2" placeholder="Confirm your secure password">
-	<div class="g-recaptcha" data-sitekey="<?php echo $options['Google_Site_Key']; ?>" style="display:block;"></div><br/>
+    <div for="signonname"><span class="label">Username</span>
+    <input id="signonname" type="text" name="signonname" class="required" placeholder="Your unique username"></div>
+    <div for="email"><span class="label">Email</span>
+    <input id="email" type="text" class="required email" name="email" placeholder="Your valid email"></div>
+    <div for="signonpassword"><span class="label">Password</span>
+    <input id="signonpassword" type="password" class="required" name="signonpassword" placeholder="Create secure password"></div>
+    <div for="password2"><span class="label">Confirm Password</span>
+    <input type="password" id="password2" class="required" name="password2" placeholder="Confirm your secure password"></div>
+	<div class="g-recaptcha" data-sitekey="<?php echo $options['Google_Site_Key']; ?>" style="display:block;"></div>
     <input class="<?php if($options['button_class']){echo $options['button_class'];}else{echo 'button';};?>" type="submit" value="<?php if ($options['button_register']){echo $options['button_register'];}else{echo 'Register';};?>" name="register">
 	<a id="pop_login" class="text-link" style="cursor:pointer">Want to Login?</a>
     <a class="close" href="">(close)</a>
@@ -311,8 +311,8 @@ function ciusan_login_form() {global $options; $options = get_option('ciusan_reg
     <hr />
     <p class="status"></p>
     <?php wp_nonce_field('ajax-forgot-nonce', 'forgotsecurity'); ?>  
-    <span for="user_login">Username or Email</span>
-    <input id="user_login" type="text" class="required" name="user_login" placeholder="Insert your username or email">
+    <div for="user_login"><span class="label">Username or Email</span>
+    <input id="user_login" type="text" class="required" name="user_login" placeholder="Insert your username or email here"></div>
 	<input class="<?php if($options['button_class']){echo $options['button_class'];}else{echo 'button';};?>" type="submit" value="<?php if ($options['button_forgot_password']){echo $options['button_forgot_password'];}else{echo 'Get Password';};?>" name="forgot_password">
 	<a class="close" style="cursor:pointer">(close)</a>    
 </form>

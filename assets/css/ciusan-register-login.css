@@ -25,7 +25,6 @@ form.crl-ajax-auth{
     left:15px;
 	margin-top:-10px;
 }
-
 .crl-ajax-auth h3{
     font-size:18px;
     text-align:left;
@@ -56,7 +55,7 @@ form.crl-ajax-auth{
     font-size:15px;
     padding:10px 10px 10px 13px;
     width:300px;
-    margin-bottom:20px;
+    margin-bottom:5px;
     background-color:#F9F9F9;
     font-family:'Georgia', 'Times New Roman', Times, serif;
 }

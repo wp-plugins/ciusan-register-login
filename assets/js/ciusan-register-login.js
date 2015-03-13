@@ -1,11 +1,11 @@
 jQuery(document).ready(function ($) {
     // Display form from link inside a popup
-	$('#pop_login, #pop_signup').live('click', function (e) {
-        formToFadeOut = $('form#register');
-        formtoFadeIn = $('form#login');
-        if ($(this).attr('id') == 'pop_signup') {
-            formToFadeOut = $('form#login');
-            formtoFadeIn = $('form#register');
+	jQuery('#pop_login, #pop_signup').live('click', function (e) {
+        formToFadeOut = jQuery('form#register');
+        formtoFadeIn = jQuery('form#login');
+        if (jQuery(this).attr('id') == 'pop_signup') {
+            formToFadeOut = jQuery('form#login');
+            formtoFadeIn = jQuery('form#register');
         }
         formToFadeOut.fadeOut(500, function () {
             formtoFadeIn.fadeIn();
@@ -14,9 +14,9 @@ jQuery(document).ready(function ($) {
     });
 	
 	// Display lost password form 
-	$('#pop_forgot').click(function(){
-		formToFadeOut = $('form#login');
-		formtoFadeIn = $('form#forgot_password');
+	jQuery('#pop_forgot').click(function(){
+		formToFadeOut = jQuery('form#login');
+		formtoFadeIn = jQuery('form#forgot_password');
 		formToFadeOut.fadeOut(500, function () {
         	formtoFadeIn.fadeIn();
 		})
@@ -24,41 +24,41 @@ jQuery(document).ready(function ($) {
 	});
 
 	// Close popup
-    $(document).on('click', '.close', function () {
-		$('form#login, form#register, form#forgot_password').fadeOut(500, function () {
-            $('.crl_overlay').remove();
+    jQuery(document).on('click', '.close', function () {
+		jQuery('form#login, form#register, form#forgot_password').fadeOut(500, function () {
+            jQuery('.crl_overlay').remove();
         });
         return false;
     });
 
     // Show the login/signup popup on click
-    $('#show_login, #show_signup').on('click', function (e) {
-        $('body').prepend('<div class="login_overlay"></div>');
-        if ($(this).attr('id') == 'show_login')
-			$('form#login').fadeIn(500);
+    jQuery('#show_login, #show_signup').on('click', function (e) {
+        jQuery('body').prepend('<div class="crl_overlay"></div>');
+        if (jQuery(this).attr('id') == 'show_login')
+			jQuery('form#login').fadeIn(500);
         else 
-			$('form#register').fadeIn(500);
+			jQuery('form#register').fadeIn(500);
         e.preventDefault();
     });
 
 	// Perform AJAX login/register on form submit
-	$('form#login, form#register').on('submit', function (e) {
-        if (!$(this).valid()) return false;
-        $('p.status', this).show().text(ajax_auth_object.loadingmessage);
+	jQuery('form#login, form#register').on('submit', function (e) {
+        if (!jQuery(this).valid()) return false;
+        jQuery('p.status', this).show().text(ajax_auth_object.loadingmessage);
 		action = 'ajaxlogin';
-		username = 	$('form#login #username').val();
-		password = $('form#login #password').val();
+		username = 	jQuery('form#login #username').val();
+		password = jQuery('form#login #password').val();
 		email = '';
-		security = $('form#login #security').val();
-		if ($(this).attr('id') == 'register') {
+		security = jQuery('form#login #security').val();
+		if (jQuery(this).attr('id') == 'register') {
 			action = 'ajaxregister';
-			username = $('#signonname').val();
-			password = $('#signonpassword').val();
-			email = $('#email').val();
-			security = $('#signonsecurity').val();
-			recaptcha = $('#g-recaptcha-response').val();
+			username = jQuery('#signonname').val();
+			password = jQuery('#signonpassword').val();
+			email = jQuery('#email').val();
+			security = jQuery('#signonsecurity').val();
+			recaptcha = jQuery('#g-recaptcha-response').val();
 		}
-		ctrl = $(this);
+		ctrl = jQuery(this);
 		$.ajax({
             type: 'POST',
             dataType: 'json',
@@ -72,10 +72,10 @@ jQuery(document).ready(function ($) {
 				'recaptcha': recaptcha
             },
             success: function (data) {
-				if(($(ctrl).attr ('id') == 'register') && (data.loggedin == false)) grecaptcha.reset();
-				$('p.status', ctrl).text(data.message);
+				if((jQuery(ctrl).attr ('id') == 'register') && (data.loggedin == false)) grecaptcha.reset();
+				jQuery('p.status', ctrl).text(data.message);
 				if (data.loggedin == true) {
-					document.location.href = $(ctrl).attr ('id') == 'register' ? ajax_auth_object.register_redirect : ajax_auth_object.redirecturl;
+					document.location.href = jQuery(ctrl).attr ('id') == 'register' ? ajax_auth_object.register_redirect : ajax_auth_object.redirecturl;
                 }
             }
         });
@@ -83,21 +83,21 @@ jQuery(document).ready(function ($) {
     });
 
 	// Perform AJAX forget password on form submit
-	$('form#forgot_password').on('submit', function(e){
-		if (!$(this).valid()) return false;
-		$('p.status', this).show().text(ajax_auth_object.loadingmessage);
-		ctrl = $(this);
+	jQuery('form#forgot_password').on('submit', function(e){
+		if (!jQuery(this).valid()) return false;
+		jQuery('p.status', this).show().text(ajax_auth_object.loadingmessage);
+		ctrl = jQuery(this);
 		$.ajax({
 			type: 'POST',
             dataType: 'json',
             url: ajax_auth_object.ajaxurl,
 			data: { 
 				'action': 'ajaxforgotpassword', 
-				'user_login': $('#user_login').val(), 
-				'security': $('#forgotsecurity').val(), 
+				'user_login': jQuery('#user_login').val(), 
+				'security': jQuery('#forgotsecurity').val(), 
 			},
 			success: function(data){					
-				$('p.status',ctrl).text(data.message);				
+				jQuery('p.status',ctrl).text(data.message);				
 			}
 		});
 		e.preventDefault();

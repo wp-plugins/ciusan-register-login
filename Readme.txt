@@ -4,7 +4,7 @@ Donate link: http://www.ciusan.com/submit-donation/
 Tags: ciusan, login, register, lost, password, popup, modal, overlay, shortcode, captcha, recaptcha
 Requires at least: 3.2
 Tested up to: 4.1.1
-Stable tag: 2.1
+Stable tag: 2.0
 
 Showing login, register or lost password form modal popup with ajax.
 
