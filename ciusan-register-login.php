@@ -84,7 +84,7 @@ wp_register_script('validate-script', plugin_dir_url( __FILE__ ).'assets/js/jque
     wp_enqueue_script('google-recaptcha');
     wp_register_script('ciusan-register-login', plugin_dir_url( __FILE__ ).'assets/js/ciusan-register-login.js', array('jquery'));
     wp_enqueue_script('ciusan-register-login');
-	    wp_localize_script( 'ajax-auth-script', 'ajax_auth_object', array(
+	    wp_localize_script( 'ciusan-register-login', 'ajax_auth_object', array(
 	        'ajaxurl'			=> admin_url( 'admin-ajax.php' ),
 			'redirecturl'		=> isset($options['login_redirect_URL']) ? $options['login_redirect_URL'] : home_url(),
 			'register_redirect'	=> isset($options['register_redirect_URL']) ? $options['register_redirect_URL'] : home_url(),
